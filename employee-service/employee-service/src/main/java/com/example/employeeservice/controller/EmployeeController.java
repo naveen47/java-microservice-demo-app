@@ -19,30 +19,6 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-//    @PostMapping
-//    public Employee add(@RequestBody Employee employee) {
-//        LOGGER.info("Employee add: {}", employee);
-//        return repository.add(employee);
-//    }
-//
-//    @GetMapping
-//    public List<Employee> findAll() {
-//        LOGGER.info("Employee find");
-//        return repository.findAll();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public Employee findById(@PathVariable("id") Long id) {
-//        LOGGER.info("Employee find: id={}", id);
-//        return repository.findById(id);
-//    }
-//
-//    @GetMapping("/department/{departmentId}")
-//    public List<Employee> findByDepartment(@PathVariable("departmentId") Long departmentId) {
-//        LOGGER.info("Employee find: departmentId={}", departmentId);
-//        return repository.findByDepartment(departmentId);
-//    }
-
     @PostMapping("/add")
     public Employee add(@RequestBody Employee department) {
         LOGGER.info("Department add: {}", department);
@@ -60,13 +36,6 @@ public class EmployeeController {
         LOGGER.info("Department find: id={}", id);
         return employeeService.getEmployeeById(id);
     }
-
-//    @GetMapping("/department/{deptId}")
-//    public List<Employee> findByDepartment(@PathVariable("deptId") Integer deptId) {
-//        LOGGER.info("Employee find: deptId={}", deptId);
-//        return repository.findByDepartment(departmentId);
-//    }
-
 
     @GetMapping("/department/{deptId}")
     public List<Employee> findByDepartment(@PathVariable("deptId") Integer deptId) {

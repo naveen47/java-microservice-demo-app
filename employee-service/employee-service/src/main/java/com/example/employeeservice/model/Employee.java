@@ -14,9 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@Table(name = "employee")
 public class Employee {
-
     @Id
     @Column(name = "emp_id")
     Integer empId;

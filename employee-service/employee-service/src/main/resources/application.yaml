@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: employee-service
+  config:
+    import: "optional:configserver:http://localhost:8088"
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/employeedb
+    password:
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+      open-in-view: true

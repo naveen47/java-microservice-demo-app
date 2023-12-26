@@ -7,6 +7,8 @@ import com.example.departmentservice.service.DepartmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,30 +28,33 @@ public class DepartmentController {
     private EmployeeClient employeeClient;
 
     @PostMapping("/add")
-    public Department add(@RequestBody Department department) {
+    public ResponseEntity<Department> add(@RequestBody Department department){
         LOGGER.info("Department add: {}", department);
-        return departmentService.addDepartment(department);
+        Department savedDepartment = departmentService.addDepartment(department);
+        return new ResponseEntity<>(savedDepartment, HttpStatus.CREATED);
     }
 
     @GetMapping("/all")
-    public List<Department> findAll() {
-        LOGGER.info("Department find");
-        return departmentService.getAllDepartments();
+    public ResponseEntity<List<Department>> findAll(){
+        LOGGER.info("Department find All");
+        List<Department> departments = departmentService.getAllDepartments();
+        return new ResponseEntity<>(departments, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public Department findById(@PathVariable Integer id) {
+    @GetMapping("{id}")
+    public ResponseEntity<Department> findById(@PathVariable Integer id){
         LOGGER.info("Department find: id={}", id);
-        return departmentService.getDepartmentById(id);
+        Department department = departmentService.getDepartmentById(id);
+        return new ResponseEntity<>(department, HttpStatus.OK);
     }
 
     @GetMapping("/with-employees")
-    public List<Department> findAllWithEmployees() {
+    public ResponseEntity<List<Department>> findAllWithEmployees(){
         LOGGER.info("Department find");
         List<Department> departments
                 = departmentService.getAllDepartments();
         departments.forEach(department ->
                 department.setEmployees(employeeClient.findByDepartment(department.getDeptId())));
-        return  departments;
+        return  new ResponseEntity<>(departments, HttpStatus.OK);
     }
 }

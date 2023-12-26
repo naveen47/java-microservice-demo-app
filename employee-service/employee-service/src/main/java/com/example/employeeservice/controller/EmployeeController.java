@@ -6,6 +6,8 @@ import com.example.employeeservice.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,27 +22,31 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping("/add")
-    public Employee add(@RequestBody Employee department) {
-        LOGGER.info("Department add: {}", department);
-        return employeeService.addEmploye(department);
+    public ResponseEntity<Employee>add(@RequestBody Employee employee){
+        LOGGER.info("Employee add: {}", employee);
+        Employee savedEmployee = employeeService.addEmploye(employee);
+        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 
     @GetMapping("/all")
-    public List<Employee> findAll() {
-        LOGGER.info("Department find");
-        return employeeService.getAllEmployees();
+    public ResponseEntity<List<Employee>> findAll(){
+        LOGGER.info("Employee find All");
+        List<Employee> employees = employeeService.getAllEmployees();
+        return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Employee findById(@PathVariable Integer id) {
+    public ResponseEntity<Employee>findById(@PathVariable Integer id){
         LOGGER.info("Department find: id={}", id);
-        return employeeService.getEmployeeById(id);
+        Employee employee  = employeeService.getEmployeeById(id);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
     @GetMapping("/department/{deptId}")
-    public List<Employee> findByDepartment(@PathVariable("deptId") Integer deptId) {
+    public ResponseEntity<List<Employee>> findByDepartment(@PathVariable("deptId") Integer deptId){
         LOGGER.info("Employee find: deptId={}", deptId);
-        return employeeService.findByDepartment(deptId);
+        List<Employee> employees = employeeService.findByDepartment(deptId);
+        return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
 }
